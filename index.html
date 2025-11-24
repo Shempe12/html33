@@ -1,15 +1,120 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>html33</title>
-</head>
- <h1>LusheApp </h1>
- <h3>Lucky Shempe</h3>
-<body>
+  <head>
+    <title>DOM Projects</title>
   
-</body>
+    
+  </head>
+  <body>
+    <p>YouTube Subscribe Button</p>
+    <button onclick="
+      subscribe();
+    " class="js-subscribe-button">
+      Subscribe
+  </button>
 
+  <p>Lushe Shipping Calculator</p>
+  <input placeholder="Cost of order" class="js-cost-input" onkeydown="
+     handleCostKeydown(event);
+     ">
+  <button onclick="
+     calculateTotal();
+  ">Calculate</button>
+  <p class="js-total-cost"></p>
+
+    <button onclick="loginWithFacebook()">Login with Facebook</button>
+
+<p id="status"></p>
+<img id="profilePic" width="101" />
+
+
+    <script>
+      String(25)
+      console.log('25' - 5);
+      console.log('25'  + 5);
+
+      window.document
+      window.console.log('window');
+      window.alert
+
+      function handleCostKeydown(event) {
+        
+        if(event.key === 'Enter') {
+          calculateTotal();
+     }
+      }
+
+      function calculateTotal() {
+       const inputElement = document.querySelector('.js-cost-input');
+       let cost = Number(inputElement.value);
+       
+       if (cost < 40) {
+         cost = cost + 10;
+         
+       }
+
+       document.querySelector('.js-total-cost')
+         .innerHTML = `$${cost}`;
+      }
+
+      function subscribe() {
+        const buttonElement = document.querySelector('.js-subscribe-button');
+        
+        if (buttonElement.innerText === 'Subscribe') {
+          buttonElement.innerHTML = 'Subscribed';
+        } else {
+          buttonElement.innerHTML = 'Subscribe';
+        }
+      }
+    
+  // Load Facebook SDK
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      :"844419068143963",  // <-- replace this
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v20.0'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+  // Login function
+  function loginWithFacebook() {
+    FB.login(function(response) {
+      if (response.status === 'connected') {
+        getUserData();
+      } else {
+        document.getElementById("status").innerHTML = "Login failed.";
+      }
+    }, {scope: 'public_profile,email'}); 
+  }
+
+  // Fetch User Data
+  function getUserData() {
+    FB.api('/me', {fields: 'name,email,picture'}, function(response) {
+        document.getElementById("status").innerHTML =
+          "Welcome, " + response.name + "<br>Email: " + response.email;
+
+        document.getElementById("profilePic").src =
+          response.picture.data.url;
+    });
+  }
+
+
+
+  </script>
+  </body>
 </html>
+
+
+
+
+
+
